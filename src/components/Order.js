@@ -7,28 +7,24 @@ class Order extends React.Component {
         const fish = this.props.fishes[key];
         const count = this.props.order[key];
         const isAvailable = fish && fish.status === 'available';
-
+        const transitionOptions = {
+            classNames: "order",
+            key, 
+            timeout:{ enter: 250, exit: 250 }
+        }
         // On s'assure que les poissons soient bien chargé vant d'afficher la commande, sinon ça va sauter, puisque le stockage local est plus rapide que Firebase
         if (!fish) return null
 
         if (!isAvailable) {
             return (
-            <CSSTransition 
-                classNames="order" 
-                key={key} 
-                timeout={{ enter: 250, exit: 250 }}
-            >
+            <CSSTransition {...transitionOptions}>
                 <li key={key}> 
                             Sorry {fish ? fish.name : 'fish'} is no longer available.
                         </li>
             </CSSTransition>
             );}
         return (
-            <CSSTransition 
-                classNames="order" 
-                key={key} 
-                timeout={{ enter: 250, exit: 250 }}
-            >
+            <CSSTransition {...transitionOptions}>
                 <li key={key}>
                     <span>
                     <TransitionGroup component="span" className="count">
